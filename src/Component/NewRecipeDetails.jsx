@@ -1,3 +1,4 @@
+//新しいレシピの詳細を表示するためのコンポーネント
 import React from 'react';
 import { Typography, Box, Paper } from '@mui/material';
 

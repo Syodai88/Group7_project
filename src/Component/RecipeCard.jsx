@@ -1,3 +1,4 @@
+//類似度が高い料理を表示するコンポーネント
 import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 

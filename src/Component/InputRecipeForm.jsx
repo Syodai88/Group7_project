@@ -1,3 +1,4 @@
+//入力フォームのコンポーネント
 import React, { useState } from 'react';
 import { TextField, Button, Box, List, ListItem  } from '@mui/material';
 
