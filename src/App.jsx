@@ -20,7 +20,7 @@ const App = () => {
     ingredients: '材料A、材料B、材料C',
     steps: '手順1、手順2、手順3'
   };
-  const imageUrl = '/Users/asaokashoudai/Desktop/３年/3年後期/知能情報工学プロジェクト/group7_project/src/logo.svg'; // ここに実際の画像URLを設定
+  const imageUrl = 'src/stable-diffusion-v1-5.jpeg'; // ここに実際の画像URLを設定
 
   return (
     <div className="App">
