@@ -4,6 +4,7 @@ import InputRecipeForm from './Component/InputRecipeForm';
 import RecipeCard from './Component/RecipeCard';
 import NewRecipeDetails from './Component/NewRecipeDetails';
 import Grid from '@mui/material/Grid';
+import NewRecipeImage from './stable-diffusion-v1-5.jpeg'
 
 const App = () => {
   // 仮のレシピデータと画像URL
@@ -20,7 +21,8 @@ const App = () => {
     ingredients: '材料A、材料B、材料C',
     steps: '手順1、手順2、手順3'
   };
-  const imageUrl = 'src/stable-diffusion-v1-5.jpeg'; // ここに実際の画像URLを設定
+  //const imageUrl = 'src/stable-diffusion-v1-5.jpeg'; 
+  //画像を動的に生成するならAPIを叩く必要があるので後日作成予定、とりあえず見た目のためimportで表示
 
   return (
     <div className="App">
@@ -35,7 +37,7 @@ const App = () => {
               <RecipeCard key={index} recipe={recipe} />
             ))}
           </div>
-          <NewRecipeDetails recipe={originalRecipe} imageUrl={imageUrl} />
+          <NewRecipeDetails recipe={originalRecipe} imageUrl={NewRecipeImage} />
         </Grid>
       </Grid>
     </div>
