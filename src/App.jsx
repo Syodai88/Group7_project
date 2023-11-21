@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import NewRecipeImage from './stable-diffusion-v1-5.jpeg'
 
 const App = () => {
-  // 仮のレシピデータと画像URL
+  //仮のレシピデータ
   const sampleRecipes = [
     { name: 'レシピ1' },
     { name: 'レシピ2' },
@@ -15,7 +15,7 @@ const App = () => {
     // ここに他のレシピを追加できます
   ];
 
-  // 仮のオリジナルレシピデータと画像URL
+  //仮のオリジナルレシピデータと画像URL
   const originalRecipe = {
     name: 'オリジナルレシピ',
     ingredients: '材料A、材料B、材料C',
