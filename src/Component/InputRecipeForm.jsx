@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, List, ListItem, Typography, Grid } from '@mui/material';
 
+//App.jsxのhandleRecipeSubmitがonSubmitに渡される
 const InputRecipeForm = ({ onSubmit }) => {
   const [recipe, setRecipe] = useState({ name: '', ingredients: [], steps: '' });
   const [ingredient, setIngredient] = useState('');
