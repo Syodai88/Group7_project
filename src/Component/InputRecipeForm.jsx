@@ -54,7 +54,7 @@ const InputRecipeForm = ({ onSubmit }) => {
     e.preventDefault();//送信によるページのリロード防止
     if (validateForm()) {
       try {
-        const response = await fetch('/process',{
+        const response = await fetch('/make_vector',{
           method:'POST',
           headers:{
             'Content-Type': 'application/json',
@@ -62,11 +62,15 @@ const InputRecipeForm = ({ onSubmit }) => {
           body: JSON.stringify(recipe),
         });
         const data=await response.json();
-        console.log(data.result);
+        //計算結果の表示
+        data.forEach(item => {
+          console.log(`ID: ${item[0]}, Cosine Similarity: ${item[1]}`);
+        });
+        console.log(recipe);
+        onSubmit({ recipeData: recipe, similarityData: data });
       }catch(error){
         console.error("Error:",error);
       }
-      onSubmit(recipe);
     }
   };
 
