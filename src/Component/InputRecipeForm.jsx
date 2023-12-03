@@ -50,9 +50,22 @@ const InputRecipeForm = ({ onSubmit }) => {
   };
 
   //提出
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();//送信によるページのリロード防止
     if (validateForm()) {
+      try {
+        const response = await fetch('/process',{
+          method:'POST',
+          headers:{
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(recipe),
+        });
+        const data=await response.json();
+        console.log(data.result);
+      }catch(error){
+        console.error("Error:",error);
+      }
       onSubmit(recipe);
     }
   };
