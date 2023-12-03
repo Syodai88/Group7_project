@@ -49,7 +49,7 @@ const InputRecipeForm = ({ onSubmit }) => {
     }
   };
 
-  //提出
+  //データの送信
   const handleSubmit = async(e) => {
     e.preventDefault();//送信によるページのリロード防止
     if (validateForm()) {
