@@ -12,7 +12,7 @@ const App = () => {
 
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
-    setRecipeData(data.recipe);
+    setRecipeData(data.recipeData);
     setSimilarityData(data.similarityData);
   };
 
