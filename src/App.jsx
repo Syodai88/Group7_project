@@ -9,11 +9,13 @@ import NewRecipeImage from './stable-diffusion-v1-5.jpeg'
 const App = () => {
   const [recipeData, setRecipeData] = useState(null);
   const [similarityData, setSimilarityData] = useState(null);
+  console.log(similarityData)
 
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
     setRecipeData(data.recipeData);
     setSimilarityData(data.similarityData);
+    console.log(similarityData)
   };
 
   //仮のレシピデータ
