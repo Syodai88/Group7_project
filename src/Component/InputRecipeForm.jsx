@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, List, ListItem, Typography, Grid } from '@mui/material';
+import axios from 'axios';
 
 //App.jsxのhandleRecipeSubmitがonSubmitに渡される
 const InputRecipeForm = ({ onSubmit }) => {
@@ -55,14 +56,8 @@ const InputRecipeForm = ({ onSubmit }) => {
     e.preventDefault();//送信によるページのリロード防止
     if (validateForm()) {
       try {
-        const response = await fetch('/make_vector',{
-          method:'POST',
-          headers:{
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(recipe),
-        });
-        const data=await response.json();
+        const response = await axios.post('/make_vector',recipe);
+        const data=await response.data;
         //計算結果の表示
         data.forEach(item => {
           console.log(`ID: ${item[0]}, Cosine Similarity: ${item[1]}`);
