@@ -29,11 +29,11 @@ const App = () => {
     if (similarityData && similarityData.length > 0) {
       //similarityDataからidのみを抽出
       const ids = similarityData.map(id => id[0]);
-      
+
       axios.post('/show_similarities', ids)
         .then(response => {
-          const updatedRecipes = response.data.map(name => ({ name }));
-          setSampleRecipes(updatedRecipes);
+          console.log(response.data)
+          setSampleRecipes(response.data);
         })
         .catch(error => console.error('Error:', error));
     }
