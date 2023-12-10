@@ -63,6 +63,7 @@ const App = () => {
         <Grid item xs={12} md={6}>
           <div>
             {sampleRecipes.map((recipe, index) => (
+              //recipeにはidとnameがある
               <RecipeCard key={index} recipe={recipe} />
             ))}
           </div>
