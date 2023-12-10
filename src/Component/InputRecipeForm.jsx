@@ -60,7 +60,7 @@ const InputRecipeForm = ({ onSubmit }) => {
         const data=await response.data;
         //計算結果の表示
         data.forEach(item => {
-          console.log(`ID: ${item[0]}, Cosine Similarity: ${item[1]}`);
+          console.log(`ID: ${item.id}, Similarity: ${item.similarity}`);
         });
         console.log(recipe);
         onSubmit({ recipeData: recipe, similarityData: data });

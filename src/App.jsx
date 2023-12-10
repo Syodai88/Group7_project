@@ -21,23 +21,25 @@ const App = () => {
   const handleRecipeSubmit = (data) => {
     setRecipeData(data.recipeData);
     setSimilarityData(data.similarityData);
-    console.log(similarityData)
   };
 
   useEffect(() => {
-    //データの有無と空配列ではないか
-    if (similarityData && similarityData.length > 0) {
-      //similarityDataからidのみを抽出
-      const ids = similarityData.map(id => id[0]);
-
-      axios.post('/show_similarities', ids)
-        .then(response => {
-          console.log(response.data)
+    //await使用のためfetchData関数を定義
+    const fetchData = async () => {
+      if (similarityData && similarityData.length > 0) {
+        const ids = similarityData.map(data => data.id);
+        try {
+          const response = await axios.post('/show_similarities', ids);
+          console.log("fetchData_id-similarity"+response.data);
           setSampleRecipes(response.data);
-        })
-        .catch(error => console.error('Error:', error));
-    }
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+    };
+    fetchData();
   }, [similarityData]);
+  
 
   
 
