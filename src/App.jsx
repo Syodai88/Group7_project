@@ -45,7 +45,7 @@ const App = () => {
 
   //gptの処理に投げるidをセットする
   const handleRecipeSelection = (selectedRecipeId)=>{
-    console.log(`この料理を作る:${selectedRecipeId}`);
+    console.log(`selectedRecipeId:${selectedRecipeId}`);
     setSelectedRecipeId(selectedRecipeId);
   }
 
