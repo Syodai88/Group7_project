@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, Box, Typography } from '@mui/material';
+import axios from 'axios';
 
 const RecipeModal = ({ open, handleClose, recipeId }) => {
   //表示時に調理方法を１ステップごとに番号付で表示したいので配列
