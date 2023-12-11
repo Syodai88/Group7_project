@@ -14,7 +14,7 @@ const RecipeModal = ({ open, handleClose, recipeId, onRecipeSelect }) => {
 
   const fetchRecipeDetails=async()=>{
     try {
-      const response = await axios.post('/fetch_recipe_details', recipeId);
+      const response = await axios.post('/fetch_recipe_details', {recipeId});
       console.log("fetchData_recipe_details"+response.data);
       setRecipeDetails(response.data);
     } catch (error) {
