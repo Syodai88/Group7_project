@@ -14,6 +14,8 @@ const App = () => {
 
   console.log(similarityData)
   const [sampleRecipes, setSampleRecipes] = useState([
+
+
     { name: 'レシピ1' },
     { name: 'レシピ2' },
     { name: 'レシピ3' }
@@ -55,8 +57,8 @@ const App = () => {
   //仮のオリジナルレシピデータと画像URL
   const originalRecipe = {
     name: 'オリジナルレシピ',
-    ingredients: '材料A、材料B、材料C',
-    steps: '手順1、手順2、手順3'
+    ingredients: '食材：',
+    steps: '調理方法：'
   };
   
   //const imageUrl = 'src/stable-diffusion-v1-5.jpeg'; 
@@ -65,17 +67,19 @@ const App = () => {
   return (
     <div className="App">
       <Header />
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={6}>
+      <Grid container spacing={3}>
+        <Grid item xs={4} md={4}>
           <InputRecipeForm onSubmit={handleRecipeSubmit} />
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={4} md={4}>
           <div>
             {sampleRecipes.map((recipe, index) => (
               //recipeにはidとnameがある
               <RecipeCard key={index} recipe={recipe} onRecipeSelect={handleRecipeSelection} />
             ))}
           </div>
+        </Grid>
+        <Grid item xs={4} md={4}>
           <NewRecipeDetails recipe={originalRecipe} imageUrl={NewRecipeImage} />
         </Grid>
       </Grid>

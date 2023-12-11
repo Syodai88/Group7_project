@@ -15,8 +15,8 @@ const InputRecipeForm = ({ onSubmit }) => {
     let newErrors = {};//エラーオブジェクトの生成
     //テキスト入力はtrimで不要なスペースの削除
     if (!recipe.name.trim()) newErrors.name = 'レシピ名を入力してください';
-    if (recipe.ingredients.length === 0) newErrors.ingredients = '最低1つの食材を追加してください';
-    if (!recipe.steps.trim()) newErrors.steps = '手順を入力してください';
+    if (recipe.ingredients.length === 0) newErrors.ingredients = '少なくとも1つの食材を追加してください';
+    if (!recipe.steps.trim()) newErrors.steps = '調理方法を入力してください';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;//エラーがなければlengthは0
@@ -109,7 +109,7 @@ const InputRecipeForm = ({ onSubmit }) => {
           />
         </Grid>
       </Grid>
-      <Button onClick={addIngredient} variant="contained" sx={{ mt: 1, mb: 2 }}>
+      <Button onClick={addIngredient} variant="contained" sx={"background-color:orange;"} >
         食材を追加
       </Button>
       {errors.ingredients && <Typography color="error">{errors.ingredients}</Typography>}
@@ -130,7 +130,7 @@ const InputRecipeForm = ({ onSubmit }) => {
         rows={8}
         onChange={handleChange}
       />
-      <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+      <Button type="submit" fullWidth variant="contained" sx={"background-color:orange;"}>
         送信
       </Button>
     </Box>
