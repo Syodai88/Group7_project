@@ -10,6 +10,8 @@ import axios from 'axios';
 const App = () => {
   const [recipeData, setRecipeData] = useState(null);
   const [similarityData, setSimilarityData] = useState(null);
+  const [selectedRecipeId, setSelectedRecipeId] = useState(null);
+
   console.log(similarityData)
   const [sampleRecipes, setSampleRecipes] = useState([
     { name: 'レシピ1' },
@@ -23,6 +25,7 @@ const App = () => {
     setSimilarityData(data.similarityData);
   };
 
+  //類似度判定をしてidと類似度を取得する
   useEffect(() => {
     //await使用のためfetchData関数を定義
     const fetchData = async () => {
@@ -30,7 +33,7 @@ const App = () => {
         const ids = similarityData.map(data => data.id);
         try {
           const response = await axios.post('/fetch_similarities_recipes', ids);
-          console.log("fetchData_id-similarity"+response.data);
+          console.log("fetchData_id-name"+response.data);
           setSampleRecipes(response.data);
         } catch (error) {
           console.error('Error:', error);
@@ -39,9 +42,15 @@ const App = () => {
     };
     fetchData();
   }, [similarityData]);
-  
+
+  //gptの処理に投げるidをセットする
+  const handleRecipeSelection = (selectedRecipeId)=>{
+    console.log(`この料理を作る:${selectedRecipeId}`);
+    setSelectedRecipeId(selectedRecipeId);
+  }
 
   
+
 
   //仮のオリジナルレシピデータと画像URL
   const originalRecipe = {
@@ -64,7 +73,7 @@ const App = () => {
           <div>
             {sampleRecipes.map((recipe, index) => (
               //recipeにはidとnameがある
-              <RecipeCard key={index} recipe={recipe} />
+              <RecipeCard key={index} recipe={recipe} onRecipeSelect={handleRecipeSelection} />
             ))}
           </div>
           <NewRecipeDetails recipe={originalRecipe} imageUrl={NewRecipeImage} />

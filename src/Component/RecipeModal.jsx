@@ -1,8 +1,9 @@
 import React,{useState,useEffect} from 'react';
 import { Modal, Box, Typography } from '@mui/material';
 import axios from 'axios';
+import { Button } from '@mui/base';
 
-const RecipeModal = ({ open, handleClose, recipeId }) => {
+const RecipeModal = ({ open, handleClose, recipeId, onRecipeSelect }) => {
   //表示時に調理方法を１ステップごとに番号付で表示したいので配列
   //group7_data内のstepsも配列なのでアクセスはこの方針
   const [recipeDetails, setRecipeDetails]=useState({
@@ -26,6 +27,12 @@ const RecipeModal = ({ open, handleClose, recipeId }) => {
       fetchRecipeDetails();
     }
   },[open,recipeId]);
+
+  //決定ボタンの機能、recipeIdをRecipeCardを経由してApp.jsxに渡す。
+  const handleSelectRecipe=()=>{
+    onRecipeSelect(recipeId);
+    handleClose();
+  }
 
   return (
     <Modal
@@ -54,6 +61,9 @@ const RecipeModal = ({ open, handleClose, recipeId }) => {
         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
           ここにレシピの詳細が表示されます。ID: {recipeId}
         </Typography>
+        <Button variant="outlined" onClick={handleSelectRecipe}>
+          この料理を選択！
+        </Button>
       </Box>
     </Modal>
   );

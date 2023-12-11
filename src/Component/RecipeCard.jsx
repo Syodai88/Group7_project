@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { Card, CardContent, Typography, Button, Modal, Box } from '@mui/material';
 import RecipeModal from './RecipeModal'; // モーダルのコンポーネントをインポート
 
-const RecipeCard = ({ recipe }) => {
+const RecipeCard = ({ recipe, onRecipeSelect}) => {
   const [modalOpen, setModalOpen] = useState(false);
-
   const handleOpenModal = () => {
     setModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setModalOpen(false);
   };
@@ -31,6 +29,7 @@ const RecipeCard = ({ recipe }) => {
         open={modalOpen}
         handleClose={handleCloseModal}
         recipeId={recipe.id}
+        onRecipeSelect={onRecipeSelect}
       />
     </Card>
   );
