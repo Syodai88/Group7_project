@@ -2,6 +2,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import { styled } from '@mui/system';
+import HeaderImage from 'C:/Users/zenin_ivfph8c/Documents/GitHub/Group7_project/src/picture/headerlogo.png';
 
 const HeaderContainer = styled('div')({
   display: 'flex',
@@ -9,7 +10,8 @@ const HeaderContainer = styled('div')({
   alignItems: 'center',
   height: '60px', // Set the height of your header
   background: 'orange', // Adjust to your header background color
-  color: theme => theme.palette.common.white, // Adjust to your header text color
+  color: 'black', // Adjust to your header text color
+  padding: '0 20px',
 });
 
 const Header = () => {
@@ -17,7 +19,8 @@ const Header = () => {
     <AppBar position="static">
       <HeaderContainer>
         <Toolbar>
-          <Typography variant="h6">
+          <img src={HeaderImage} alt="Logo" style={{ height: '40px', marginRight: '10px' }} />
+          <Typography variant="h6" fontFamily="Courier New, monospace">
             レシピアプリ
           </Typography>
         </Toolbar>
