@@ -2,7 +2,7 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-import HeaderImage from 'C:/Users/zenin_ivfph8c/Documents/GitHub/Group7_project/src/picture/headerlogo.png';
+import HeaderImage from '../picture/headerlogo.png';
 
 const HeaderContainer = styled('div')({
   display: 'flex',
