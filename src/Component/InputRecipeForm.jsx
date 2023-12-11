@@ -4,6 +4,7 @@ import axios from 'axios';
 
 //App.jsxのhandleRecipeSubmitがonSubmitに渡される
 const InputRecipeForm = ({ onSubmit }) => {
+  //stepsは料理工程1単位づつ入力するなら配列でも良い、今の所文字列で\nで区切る
   const [recipe, setRecipe] = useState({ name: '', ingredients: [], steps: '' });
   const [ingredient, setIngredient] = useState('');
   const [quantity, setQuantity] = useState('');
