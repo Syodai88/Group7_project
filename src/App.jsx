@@ -29,7 +29,7 @@ const App = () => {
       if (similarityData && similarityData.length > 0) {
         const ids = similarityData.map(data => data.id);
         try {
-          const response = await axios.post('/show_similarities', ids);
+          const response = await axios.post('/fetch_similarities_recipes', ids);
           console.log("fetchData_id-similarity"+response.data);
           setSampleRecipes(response.data);
         } catch (error) {
