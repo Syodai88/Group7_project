@@ -12,7 +12,6 @@ const App = () => {
   const [similarityData, setSimilarityData] = useState(null);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
 
-  console.log(similarityData)
   const [sampleRecipes, setSampleRecipes] = useState([
     { name: 'レシピ1' },
     { name: 'レシピ2' },
