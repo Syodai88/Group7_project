@@ -1,36 +1,11 @@
-import React,{useState,useEffect} from 'react';
+import React from 'react';
 import { Modal, Box, Typography } from '@mui/material';
-import axios from 'axios';
 import { Button } from '@mui/base';
 
-const RecipeModal = ({ open, handleClose, recipeId, onRecipeSelect }) => {
-  //表示時に調理方法を１ステップごとに番号付で表示したいので配列
-  //group7_data内のstepsも配列なのでアクセスはこの方針
-  const [recipeDetails, setRecipeDetails]=useState({
-    name:"",
-    ingridients:[],
-    steps:[]
-  });
-
-  const fetchRecipeDetails=async()=>{
-    try {
-      const response = await axios.post('/fetch_recipe_details', {recipeId});
-      console.log("fetchData_recipe_details"+response.data);
-      setRecipeDetails(response.data);
-    } catch (error) {
-      console.error('Error:', error);
-    }
-  };
-  //openかidの更新時に実行
-  useEffect(()=>{
-    if(open){
-      fetchRecipeDetails();
-    }
-  },[open,recipeId]);
-
+const RecipeModal = ({ open, handleClose, recipe, onRecipeSelect }) => {
   //決定ボタンの機能、recipeIdをRecipeCardを経由してApp.jsxに渡す。
   const handleSelectRecipe=()=>{
-    onRecipeSelect(recipeId);
+    onRecipeSelect(recipe.id);
     handleClose();
   }
 
@@ -55,11 +30,22 @@ const RecipeModal = ({ open, handleClose, recipeId, onRecipeSelect }) => {
           maxHeight: '80%',
           overflow: 'auto'
         }}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-        レシピ詳細
+          {console.log(recipe)}
+        <Typography id="modal-modal-name" variant="h6" component="h2">
+          {recipe.name}
         </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          ここにレシピの詳細が表示されます。ID: {recipeId}
+        <Typography id="modal-modal-ingredients" sx={{ mt: 2 }}>
+          材料:
+          {recipe.ingredients && recipe.ingredients.map((ingredient, index) => (
+            <Typography key={index}>{ingredient}</Typography>
+          ))}
+        </Typography>
+
+        <Typography id="modal-modal-steps" sx={{ mt: 2 }}>
+          手順:
+          {recipe.steps && recipe.steps.map((step, index) => (
+            <Typography key={index}>{index + 1}. {step}</Typography>
+          ))}
         </Typography>
         <Button variant="outlined" onClick={handleSelectRecipe}>
           この料理を選択！

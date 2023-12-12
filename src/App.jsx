@@ -24,15 +24,17 @@ const App = () => {
     setSimilarityData(data.similarityData);
   };
 
-  //類似度判定をしてidと類似度を取得する
+  //高類似度料理のidを受け取ってその情報を返す、RecipeCard、RecipeModalにも情報を渡す
   useEffect(() => {
     //await使用のためfetchData関数を定義
     const fetchData = async () => {
       if (similarityData && similarityData.length > 0) {
+        //dataからidの配列を抽出
         const ids = similarityData.map(data => data.id);
         try {
           const response = await axios.post('/fetch_similarities_recipes', ids);
-          console.log("fetchData_id-name"+response.data);
+          console.log("fetchData_id-name"+response.data[0]);
+          //id,name,ingredients,stepsを要素とするオブジェクト
           setSampleRecipes(response.data);
         } catch (error) {
           console.error('Error:', error);
@@ -47,9 +49,6 @@ const App = () => {
     console.log(`selectedRecipeId:${selectedRecipeId}`);
     setSelectedRecipeId(selectedRecipeId);
   }
-
-  
-
 
   //仮のオリジナルレシピデータと画像URL
   const originalRecipe = {
@@ -71,7 +70,7 @@ const App = () => {
         <Grid item xs={12} md={6}>
           <div>
             {sampleRecipes.map((recipe, index) => (
-              //recipeにはidとnameがある
+              //recipeにはid,name,ingredients,stepsがある
               <RecipeCard key={index} recipe={recipe} onRecipeSelect={handleRecipeSelection} />
             ))}
           </div>
