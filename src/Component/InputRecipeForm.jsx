@@ -3,7 +3,7 @@ import { TextField, Button, Box, List, ListItem, Typography, Grid } from '@mui/m
 import axios from 'axios';
 
 //App.jsxのhandleRecipeSubmitがonSubmitに渡される
-const InputRecipeForm = ({ onSubmit }) => {
+const InputRecipeForm = ({ onSubmit, setRecipeState }) => {
   //stepsは料理工程1単位づつ入力するなら配列でも良い、今の所文字列で\nで区切る
   const [recipe, setRecipe] = useState({ name: '', ingredients: [], steps: '' });
   const [ingredient, setIngredient] = useState('');
@@ -57,6 +57,7 @@ const InputRecipeForm = ({ onSubmit }) => {
     e.preventDefault();//送信によるページのリロード防止
     if (validateForm()) {
       try {
+        setRecipeState([{name:"混ぜる料理の候補を探しています..."},{name:"しばらくお待ちください"}])
         const response = await axios.post('/make_vector',recipe);
         const data=await response.data;
         //計算結果の表示

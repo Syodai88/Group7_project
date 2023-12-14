@@ -11,20 +11,20 @@ const App = () => {
   const [recipeData, setRecipeData] = useState(null);
   const [similarityData, setSimilarityData] = useState(null);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
-
   const [sampleRecipes, setSampleRecipes] = useState([
-
-
     { name: 'レシピ1' },
     { name: 'レシピ2' },
     { name: 'レシピ3' }
   ]);
-
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
     setRecipeData(data.recipeData);
     setSimilarityData(data.similarityData);
   };
+  //InputRecipeFormでsetSampleRecipesを使うため、関数化してpropsに渡す
+  const setSampleRecipesState = (data) =>{
+    setSampleRecipes(data);
+  }
 
   //高類似度料理のidを受け取ってその情報を返す、RecipeCard、RecipeModalにも情報を渡す
   useEffect(() => {
@@ -34,6 +34,8 @@ const App = () => {
         //dataからidの配列を抽出
         const ids = similarityData.map(data => data.id);
         try {
+          //検索中であることを明示
+          setSampleRecipes([{name:"混ぜる料理の候補を探しています..."},{name:"もう少しです！！"}]);
           const response = await axios.post('/fetch_similarities_recipes', ids);
           console.log("fetchData_id-name"+response.data[0]);
           //id,name,ingredients,stepsを要素とするオブジェクト
@@ -67,7 +69,7 @@ const App = () => {
       <Header />
       <Grid container spacing={3}>
         <Grid item xs={4} md={4}>
-          <InputRecipeForm onSubmit={handleRecipeSubmit} />
+          <InputRecipeForm onSubmit={handleRecipeSubmit} setRecipeState={setSampleRecipesState}/>
         </Grid>
         <Grid item xs={4} md={4}>
           <div>
