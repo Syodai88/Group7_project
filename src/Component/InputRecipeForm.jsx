@@ -8,6 +8,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
   const [recipe, setRecipe] = useState({ name: '', ingredients: [], steps: '' });
   const [ingredient, setIngredient] = useState('');
   const [quantity, setQuantity] = useState('');
+  const [selectedIngredientIndex, setSelectedIngredientIndex] = useState(-1);
   const [errors, setErrors] = useState({});
 
   //エラーチェックの関数、真偽値を返す
@@ -33,23 +34,39 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
     setIngredient(e.target.value);
   };
 
-  //手順のイベントハンドラ
+  //分量のイベントハンドラ
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
   };
+  //既存の具材の変更処理
+  const handleIngredientSelect = (index) =>{
+    setSelectedIngredientIndex(index);
+    console.log("test"+recipe.ingredients[index]);
+    const selectedIngredient = recipe.ingredients[index].split(":");
+    console.log(selectedIngredient);
+    setIngredient(selectedIngredient[0])
+    setQuantity(selectedIngredient[1]);
+  }
 
-  //具材：分量を追加するときのチェック
-  const addIngredient = () => {
-    if (ingredient.trim() && quantity.trim()) {
-      //ingredients配列に追加、スプレット構文で新オブジェクトを生成する形
-      setRecipe({ ...recipe, ingredients: [...recipe.ingredients, `${ingredient}：${quantity}`] });
-      //入力欄とエラーの初期化
-      setIngredient('');
-      setQuantity('');
-      setErrors({ ...errors, ingredients: '' });
-    } else {//どちらかが空欄の時の処理
-      setErrors({ ...errors, ingredients: '具材と分量を両方入力してください' });
+  //具材:分量を追加するときのチェック
+  const updateIngredient = () => {
+    if (selectedIngredientIndex >= 0){
+      const updateIngredients = [...recipe.ingredients];
+      updateIngredients[selectedIngredientIndex] = `${ingredient}:${quantity}`;
+      setRecipe({...recipe, ingredients : updateIngredients});
+    }else{
+        if (ingredient.trim() && quantity.trim()) {
+          //ingredients配列に追加、スプレット構文で新オブジェクトを生成する形
+          setRecipe({ ...recipe, ingredients: [...recipe.ingredients, `${ingredient}:${quantity}`] });
+        } else {//どちらかが空欄の時の処理
+          setErrors({ ...errors, ingredients: '具材と分量を両方入力してください' });
+        }
     }
+    //入力欄とエラーの初期化
+    setIngredient('');
+    setQuantity('');
+    setSelectedIngredientIndex(-1);
+    setErrors({ ...errors, ingredients: '' });
   };
 
   //データの送信
@@ -111,13 +128,15 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
           />
         </Grid>
       </Grid>
-      <Button onClick={addIngredient} variant="contained" sx={"background-color:orange;"} >
-        食材を追加
+      <Button onClick={updateIngredient} variant="contained" sx={{backgroundColor:'orange'}} >
+        {selectedIngredientIndex >= 0 ? '食材を更新' : '食材を追加'}
       </Button>
       {errors.ingredients && <Typography color="error">{errors.ingredients}</Typography>}
       <List>
         {recipe.ingredients.map((item, index) => (
-          <ListItem key={index}>{item}</ListItem>
+          <ListItem key={index} button onClick={() => handleIngredientSelect(index)}>
+            {item}
+          </ListItem>
         ))}
       </List>
       <TextField
@@ -132,7 +151,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         rows={8}
         onChange={handleChange}
       />
-      <Button disabled={isInputButtonDisabled} type="submit" fullWidth variant="contained" sx={"background-color:orange;"}>
+      <Button disabled={isInputButtonDisabled} type="submit" fullWidth variant="contained" sx={{backgroundColor:'orange'}}>
         送信
       </Button>
     </Box>

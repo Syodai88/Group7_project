@@ -63,8 +63,8 @@ const App = () => {
   //仮のオリジナルレシピデータと画像URL
   const originalRecipe = {
     name: 'オリジナルレシピ',
-    ingredients: '食材：',
-    steps: '調理方法：'
+    ingredients: '食材:',
+    steps: '調理方法:'
   };
   
   //const imageUrl = 'src/stable-diffusion-v1-5.jpeg'; 
