@@ -16,6 +16,7 @@ const App = () => {
     { name: 'レシピ2' },
     { name: 'レシピ3' }
   ]);
+  const [isInputButtonDisabled,setIsInputButtonDisabled] = useState(false);//ボタンの活性/非活性
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
     setRecipeData(data.recipeData);
@@ -24,6 +25,10 @@ const App = () => {
   //InputRecipeFormでsetSampleRecipesを使うため、関数化してpropsに渡す
   const setSampleRecipesState = (data) =>{
     setSampleRecipes(data);
+  }
+  //InputRecipeFormでsetSampleRecipesを使うため、関数化してpropsに渡す、一応デフォルトをtureにして無引数でも実行
+  const setIsInputButtonDisabledState = (bool=true) =>{
+    setIsInputButtonDisabled(bool);
   }
 
   //高類似度料理のidを受け取ってその情報を返す、RecipeCard、RecipeModalにも情報を渡す
@@ -40,6 +45,7 @@ const App = () => {
           console.log("fetchData_id-name"+response.data[0]);
           //id,name,ingredients,stepsを要素とするオブジェクト
           setSampleRecipes(response.data);
+          setIsInputButtonDisabled(false);
         } catch (error) {
           console.error('Error:', error);
         }
@@ -69,7 +75,7 @@ const App = () => {
       <Header />
       <Grid container spacing={3}>
         <Grid item xs={4} md={4}>
-          <InputRecipeForm onSubmit={handleRecipeSubmit} setRecipeState={setSampleRecipesState}/>
+          <InputRecipeForm onSubmit={handleRecipeSubmit} setRecipeState={setSampleRecipesState} setButtonState={setIsInputButtonDisabledState} isInputButtonDisabled={isInputButtonDisabled}/>
         </Grid>
         <Grid item xs={4} md={4}>
           <div>
