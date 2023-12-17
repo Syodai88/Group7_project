@@ -91,10 +91,6 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         const response = await axios.post('/make_vector',recipe);
         const data=await response.data;
         //計算結果の表示
-        data.forEach(item => {
-          console.log(`ID: ${item.id}, Similarity: ${item.similarity}`);
-        });
-        console.log(recipe);
         onSubmit({ recipeData: recipe, similarityData: data });
       }catch(error){
         console.error("Error:",error);

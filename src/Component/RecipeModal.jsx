@@ -30,7 +30,6 @@ const RecipeModal = ({ open, handleClose, recipe, onRecipeSelect }) => {
           maxHeight: '80%',
           overflow: 'auto'
         }}>
-          {console.log(recipe)}
         <Typography id="modal-modal-name" variant="h6" component="h2">
           {recipe.name}
         </Typography>

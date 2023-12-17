@@ -42,7 +42,6 @@ const App = () => {
           //検索中であることを明示
           setSampleRecipes([{name:"混ぜる料理の候補を探しています..."},{name:"もう少しです！！"}]);
           const response = await axios.post('/fetch_similarities_recipes', ids);
-          console.log("fetchData_id-name"+response.data[0]);
           //id,name,ingredients,stepsを要素とするオブジェクト
           setSampleRecipes(response.data);
           setIsInputButtonDisabled(false);
