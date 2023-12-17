@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, List, ListItem, Typography, Grid } from '@mui/material';
+import { TextField, Button, Box, List, ListItem, ListItemIcon, Typography, Grid } from '@mui/material';
 import axios from 'axios';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked'; 
 
 //App.jsxのhandleRecipeSubmitがonSubmitに渡される
 const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButtonDisabled}) => {
@@ -33,40 +35,50 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
   const handleIngredientChange = (e) => {
     setIngredient(e.target.value);
   };
-
   //分量のイベントハンドラ
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
   };
   //既存の具材の変更処理
   const handleIngredientSelect = (index) =>{
-    setSelectedIngredientIndex(index);
-    console.log("test"+recipe.ingredients[index]);
-    const selectedIngredient = recipe.ingredients[index].split(":");
-    console.log(selectedIngredient);
-    setIngredient(selectedIngredient[0])
-    setQuantity(selectedIngredient[1]);
+    if(selectedIngredientIndex === index){//もう選択していて同じとこを押した時
+      setSelectedIngredientIndex(-1);
+      setIngredient("");
+      setQuantity("");
+    }else{
+        setSelectedIngredientIndex(index);
+        const selectedIngredient = recipe.ingredients[index].split(":");
+        setIngredient(selectedIngredient[0].trim());
+        setQuantity(selectedIngredient[1].trim());
+    }
   }
 
   //具材:分量を追加するときのチェック
   const updateIngredient = () => {
-    if (selectedIngredientIndex >= 0){
-      const updateIngredients = [...recipe.ingredients];
-      updateIngredients[selectedIngredientIndex] = `${ingredient}:${quantity}`;
-      setRecipe({...recipe, ingredients : updateIngredients});
-    }else{
-        if (ingredient.trim() && quantity.trim()) {
-          //ingredients配列に追加、スプレット構文で新オブジェクトを生成する形
-          setRecipe({ ...recipe, ingredients: [...recipe.ingredients, `${ingredient}:${quantity}`] });
-        } else {//どちらかが空欄の時の処理
-          setErrors({ ...errors, ingredients: '具材と分量を両方入力してください' });
-        }
+    if (selectedIngredientIndex >= 0){//更新処理
+      const updateIngredients = [...recipe.ingredients];//今の配列を渡す
+      if (ingredient.trim() && quantity.trim()) {
+        updateIngredients[selectedIngredientIndex] = `${ingredient}:${quantity}`;//indexの場所を更新
+        setRecipe({...recipe, ingredients : updateIngredients});//配列を完全新しくする
+        setIngredient('');
+        setQuantity('');
+        setSelectedIngredientIndex(-1);
+        setErrors({ ...errors, ingredients: '' });
+      }else{
+        setErrors({ ...errors, ingredients: '具材と分量を両方入力してください' });
+      }
+    }else{//追加処理
+      if (ingredient.trim() && quantity.trim()) {
+        //ingredients配列に追加、スプレット構文で新オブジェクトを生成する形
+        setRecipe({ ...recipe, ingredients: [...recipe.ingredients, `${ingredient}:${quantity}`] });
+        setIngredient('');
+        setQuantity('');
+        setSelectedIngredientIndex(-1);
+        setErrors({ ...errors, ingredients: '' });
+      } else {//どちらかが空欄の時の処理
+        setErrors({ ...errors, ingredients: '具材と分量を両方入力してください' });
+      }
     }
-    //入力欄とエラーの初期化
-    setIngredient('');
-    setQuantity('');
-    setSelectedIngredientIndex(-1);
-    setErrors({ ...errors, ingredients: '' });
   };
 
   //データの送信
@@ -93,7 +105,6 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
   return (
     //html要素のform指定
     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-      {/*レシピ名の入力欄*/}
       <TextField
         //!!は強制的に真偽値に変換する
         error={!!errors.name}//エラーに何もなければfalseの否定でtrue
@@ -135,6 +146,9 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
       <List>
         {recipe.ingredients.map((item, index) => (
           <ListItem key={index} button onClick={() => handleIngredientSelect(index)}>
+            <ListItemIcon>
+              {selectedIngredientIndex === index ? <CheckCircleIcon /> : <RadioButtonUncheckedIcon /> }
+            </ListItemIcon>
             {item}
           </ListItem>
         ))}
