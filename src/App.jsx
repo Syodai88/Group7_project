@@ -16,6 +16,8 @@ const App = () => {
     { name: 'レシピ2' },
     { name: 'レシピ3' }
   ]);
+  const [newRecipe, setNewRecipe] = useState("");
+  const [imagePrompt, setImagePrompt] = useState(null);
   const [isInputButtonDisabled,setIsInputButtonDisabled] = useState(false);//ボタンの活性/非活性
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
@@ -46,7 +48,7 @@ const App = () => {
           setSampleRecipes(response.data);
           setIsInputButtonDisabled(false);
         } catch (error) {
-          console.error('Error:', error);
+          console.error('Error_FetchSimilarityRecipe:', error);
         }
       }
     };
@@ -55,16 +57,26 @@ const App = () => {
 
   //gptの処理に投げるidをセットする
   const handleRecipeSelection = (selectedRecipeId)=>{
-    console.log(`selectedRecipeId:${selectedRecipeId}`);
     setSelectedRecipeId(selectedRecipeId);
   }
-
-  //仮のオリジナルレシピデータと画像URL
-  const originalRecipe = {
-    name: 'オリジナルレシピ',
-    ingredients: '食材:',
-    steps: '調理方法:'
-  };
+  //gptに投げるための処理、setSelectedRecipeIdの変更があれば動くようにする
+  useEffect(() => {
+    const fetchData = async () =>{
+      if (selectedRecipeId ){//データチェック
+        try {
+          const postData={id:selectedRecipeId,recipe:recipeData};//データをオブジェクトにする
+          const response = await axios.post('/fetch_newrecipe', postData);//バックエンド処理
+          setNewRecipe(response.data["newRecipe"]);
+          console.log("レシピ:",response.data["newRecipe"]);
+          setImagePrompt(response.data["prompt"]);
+          console.log("プロンプト:",response.data["prompt"]);
+        } catch (error){
+          console.error('Error_NewRecipeGenerate:',error);
+        }
+      }
+    };
+    fetchData();
+  }, [selectedRecipeId]);
   
   //const imageUrl = 'src/stable-diffusion-v1-5.jpeg'; 
   //画像を動的に生成するならAPIを叩く必要があるので後日作成予定、とりあえず見た目のためimportで表示
@@ -85,7 +97,7 @@ const App = () => {
           </div>
         </Grid>
         <Grid item xs={4} md={4}>
-          <NewRecipeDetails recipe={originalRecipe} imageUrl={NewRecipeImage} />
+          <NewRecipeDetails recipe={newRecipe} imageUrl={NewRecipeImage} />
         </Grid>
       </Grid>
     </div>
