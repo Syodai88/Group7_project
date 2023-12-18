@@ -4,7 +4,8 @@ import InputRecipeForm from './Component/InputRecipeForm';
 import RecipeCard from './Component/RecipeCard';
 import NewRecipeDetails from './Component/NewRecipeDetails';
 import Grid from '@mui/material/Grid';
-import NewRecipeImage from './stable-diffusion-v1-5.jpeg'
+import DefaultRecipeImage from './stable-diffusion-v1-5.jpeg'
+import LoadingImage from './picture/chef.gif';//gptでレシピ生成中に表示する画像
 import axios from 'axios';
 
 const App = () => {
@@ -16,8 +17,9 @@ const App = () => {
     { name: 'レシピ2' },
     { name: 'レシピ3' }
   ]);
-  const [newRecipe, setNewRecipe] = useState("");
-  const [imagePrompt, setImagePrompt] = useState(null);
+  const [newRecipe, setNewRecipe] = useState("");//新しいレシピのテキスト
+  const [imagePrompt, setImagePrompt] = useState(null);//新しいレシピを生成するプロンプト
+  const [newRecipeImage ,setNewRecipeImage] = useState(DefaultRecipeImage);
   const [isInputButtonDisabled,setIsInputButtonDisabled] = useState(false);//ボタンの活性/非活性
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
@@ -64,6 +66,7 @@ const App = () => {
     const fetchData = async () =>{
       if (selectedRecipeId ){//データチェック
         try {
+          setNewRecipeImage(LoadingImage);
           const postData={id:selectedRecipeId,recipe:recipeData};//データをオブジェクトにする
           const response = await axios.post('/fetch_newrecipe', postData);//バックエンド処理
           setNewRecipe(response.data["newRecipe"]);
@@ -97,7 +100,7 @@ const App = () => {
           </div>
         </Grid>
         <Grid item xs={4} md={4}>
-          <NewRecipeDetails recipe={newRecipe} imageUrl={NewRecipeImage} />
+          <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} />
         </Grid>
       </Grid>
     </div>
