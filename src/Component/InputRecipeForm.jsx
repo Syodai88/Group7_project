@@ -89,9 +89,8 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         setButtonState();
         setRecipeState([{name:"混ぜる料理の候補を探しています..."},{name:"しばらくお待ちください"}])
         const response = await axios.post('/make_vector',recipe);
-        const data=await response.data;
         //計算結果の表示
-        onSubmit({ recipeData: recipe, similarityData: data });
+        onSubmit({ recipeData: recipe, similarityData: response.data });
       }catch(error){
         console.error("Error:",error);
       }
