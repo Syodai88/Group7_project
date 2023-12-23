@@ -81,8 +81,22 @@ const App = () => {
     fetchData();
   }, [selectedRecipeId]);
   
-  //const imageUrl = 'src/stable-diffusion-v1-5.jpeg'; 
-  //画像を動的に生成するならAPIを叩く必要があるので後日作成予定、とりあえず見た目のためimportで表示
+  //画像生成機能
+  useEffect(()=>{
+    const fetchData = async () =>{
+      if(imagePrompt){
+        try{
+          const postData = {prompt:imagePrompt};
+          const response = await axios.post('/fetch_newimage',postData);
+          const base64Image = response.data["image"];
+          setNewRecipeImage(`data:image/jpeg;base64,${base64Image}`)
+        }catch (error){
+          console.error('Error_newImageGenerate',error);
+        }
+      }
+    };
+    fetchData();
+  }, [imagePrompt]);
 
   return (
     <div className="App">
