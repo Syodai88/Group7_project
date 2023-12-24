@@ -89,7 +89,7 @@ const App = () => {
       }
     };
     fetchData();
-  }, [selectedRecipeId]);
+  }, [selectedRecipeId,recipeData]);
   
   //画像生成機能
   useEffect(()=>{

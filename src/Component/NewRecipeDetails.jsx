@@ -1,6 +1,6 @@
 //新しいレシピの詳細を表示するためのコンポーネント
 import React from 'react';
-import { Typography, Box, Paper } from '@mui/material';
+import {Box, Paper } from '@mui/material';
 import NewRecipeModal from './NewRecipeModal';
 //imgのaltに画像を生成できなかった場合の画像が欲しい、できれば謝ってる感じのパンダ
 const NewRecipeDetails = ({ recipe, imageUrl, open,onClose }) => {
