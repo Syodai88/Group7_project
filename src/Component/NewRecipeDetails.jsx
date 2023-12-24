@@ -2,7 +2,7 @@
 import React from 'react';
 import { Typography, Box, Paper } from '@mui/material';
 import NewRecipeModal from './NewRecipeModal';
-
+//imgのaltに画像を生成できなかった場合の画像が欲しい、できれば謝ってる感じのパンダ
 const NewRecipeDetails = ({ recipe, imageUrl, open,onClose }) => {
   return (
     <Box sx={{ p: 2 }}>
