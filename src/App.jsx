@@ -125,9 +125,22 @@ const App = () => {
         </Grid>
         <Grid item xs={4} md={4}>
           <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} open={showNewRecipeMpdal} onClose={handleCloseNewRecipeModal}/>
-          {newRecipeImage !== DefaultRecipeImage && newRecipeImage !== LoadingImage && (//newRecipeImageに生成画像があるとき
-            <Button onClick={handleShowNewRecipeModal}>作り方を見る！</Button>
-          )}
+          
+          <Button
+            variant="contained"
+            style={{
+              fontSize: '18px',
+              padding: '12px 24px',
+              backgroundColor: 'orange',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              width: '100%',
+            }}
+            onClick={handleShowNewRecipeModal}
+          >
+            作り方を見る！
+          </Button>
         </Grid>
       </Grid>
     </div>
