@@ -7,6 +7,7 @@ import Grid from '@mui/material/Grid';
 import DefaultRecipeImage from './stable-diffusion-v1-5.jpeg'
 import LoadingImage from './picture/chef.gif';//gptでレシピ生成中に表示する画像
 import axios from 'axios';
+import { Button } from '@mui/base';
 
 const App = () => {
   const [recipeData, setRecipeData] = useState(null);
@@ -21,6 +22,7 @@ const App = () => {
   const [imagePrompt, setImagePrompt] = useState(null);//新しいレシピを生成するプロンプト
   const [newRecipeImage ,setNewRecipeImage] = useState(DefaultRecipeImage);
   const [isInputButtonDisabled,setIsInputButtonDisabled] = useState(false);//ボタンの活性/非活性
+  const [showNewRecipeMpdal,setShowNewRecipeModal]=useState(false);//オリジナルレシピのモーダル
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
     setRecipeData(data.recipeData);
@@ -33,6 +35,14 @@ const App = () => {
   //InputRecipeFormでsetSampleRecipesを使うため、関数化してpropsに渡す、一応デフォルトをtureにして無引数でも実行
   const setIsInputButtonDisabledState = (bool=true) =>{
     setIsInputButtonDisabled(bool);
+  }
+  //新しいレシピモーダル表示用の関数
+  const handleShowNewRecipeModal = () =>{
+    setShowNewRecipeModal(true);
+  }
+  //新しいレシピモーダル非表示用の関数
+  const handleCloseNewRecipeModal = () =>{
+    setShowNewRecipeModal(false);
   }
 
   //高類似度料理のidを受け取ってその情報を返す、RecipeCard、RecipeModalにも情報を渡す
@@ -114,7 +124,10 @@ const App = () => {
           </div>
         </Grid>
         <Grid item xs={4} md={4}>
-          <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} />
+          <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} open={showNewRecipeMpdal} onClose={handleCloseNewRecipeModal}/>
+          {newRecipeImage !== DefaultRecipeImage && newRecipeImage !== LoadingImage && (//newRecipeImageに生成画像があるとき
+            <Button onClick={handleShowNewRecipeModal}>作り方を見る！</Button>
+          )}
         </Grid>
       </Grid>
     </div>
@@ -122,3 +135,4 @@ const App = () => {
 }
 
 export default App;
+//現状はレシピ生成はできるけどモーダルを作成してからは画像が表示できなくなった。まずは画像の表示を行えるようにしてからモーダルの確認をする
