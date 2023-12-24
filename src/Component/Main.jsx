@@ -9,6 +9,7 @@ import LoadingImage from './picture/chef.gif';//gptでレシピ生成中に表�
 import axios from 'axios';
 import { Button } from '@mui/base';
 
+
 const Main = () => {
   const [recipeData, setRecipeData] = useState(null);
   const [similarityData, setSimilarityData] = useState(null);
