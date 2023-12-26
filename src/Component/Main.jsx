@@ -4,8 +4,8 @@ import InputRecipeForm from './InputRecipeForm';
 import RecipeCard from './RecipeCard';
 import NewRecipeDetails from './NewRecipeDetails';
 import Grid from '@mui/material/Grid';
-import DefaultRecipeImage from './stable-diffusion-v1-5.jpeg'
-import LoadingImage from './picture/chef.gif';//gptでレシピ生成中に表示する画像
+import DefaultRecipeImage from './../stable-diffusion-v1-5.jpeg'
+import LoadingImage from './../picture/chef.gif';//gptでレシピ生成中に表示する画像
 import axios from 'axios';
 import { Button } from '@mui/base';
 
