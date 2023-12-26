@@ -9,6 +9,9 @@ const App = () => {
     // 成功したら状態を更新
     setIsLoggedIn(true);
   };
+  const handleRegister = (userInfo) => {
+    // 登録ロジックを実装...
+  };
 
   return (
     <Routers isLoggedIn={isLoggedIn} handleLogin={handleLogin} handleRegister={handleRegister} />
