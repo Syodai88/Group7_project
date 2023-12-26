@@ -16,7 +16,7 @@ const HeaderContainer = styled('div')({
 
 const Header = () => {
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <HeaderContainer>
         <Toolbar>
           <img src={HeaderImage} alt="Logo" style={{ height: '40px', marginRight: '10px' }} />
