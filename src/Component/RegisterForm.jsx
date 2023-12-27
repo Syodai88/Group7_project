@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
 import Header from './Header';
+import axios from 'axios';
 
-const RegisterForm = ({ onRegister }) => {
+const RegisterForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [grade, setGrade] = useState('');
   const [department, setDepartment] = useState('');
-  const [secretQuestion, setSecretQuestion] = useState('');
-  const [secretAnswer, setSecretAnswer] = useState('');
   let navigate = useNavigate();
 
   // 学科の選択肢
@@ -26,10 +25,33 @@ const RegisterForm = ({ onRegister }) => {
     'その他': ["その他"]
   };
 
+  const handleRegistration = async () => {
+    try {
+      const response = await axios.post('/auth/register', {
+        email:email, 
+        password:password, 
+        grade:grade, 
+        department:department
+      });
+
+      if (response.status === 201) {
+        console.log(response.data.message);
+        navigate('/login');//ログインフォームに移動
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        console.error(error.response.data.message);
+      } else {
+        console.error('An error occurred:', error);
+      }
+    }
+  };
+
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     // ここでバックエンドに登録リクエストを送信
-    onRegister(email, password, grade, department, secretQuestion, secretAnswer);
+    handleRegistration();
   };
 
   return (
@@ -80,18 +102,6 @@ const RegisterForm = ({ onRegister }) => {
               </Select>
             </FormControl>
           )}
-          <TextField
-            label="秘密の質問"
-            value={secretQuestion}
-            onChange={(e) => setSecretQuestion(e.target.value)}
-            margin="normal"
-          />
-          <TextField
-            label="秘密の答え"
-            value={secretAnswer}
-            onChange={(e) => setSecretAnswer(e.target.value)}
-            margin="normal"
-          />
           <Button type="submit" variant="contained" color="primary" style={{ marginTop: 20 }}>
             登録
           </Button>
