@@ -4,13 +4,13 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import Main from './Main';
 
-const Routers = ({ isLoggedIn, handleLogin, handleRegister }) => {
+const Routers = ({ isLoggedIn, handleLogin }) => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={isLoggedIn ? <Main /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-        <Route path="/register" element={<RegisterForm onRegister={handleRegister} />} />
+        <Route path="/register" element={<RegisterForm/>} />
       </Routes>
     </Router>
   );

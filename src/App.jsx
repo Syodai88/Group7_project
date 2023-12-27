@@ -3,18 +3,14 @@ import Routers from './Component/Routers';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = (credentials) => {
-    // ログインロジックを実装...
-    // 成功したら状態を更新
+  const [userId, setUserId] = useState(null);
+  console.log(userId);
+  const handleLogin = (id) => {
     setIsLoggedIn(true);
+    setUserId(id);
   };
-  const handleRegister = (userInfo) => {
-    // 登録ロジックを実装...
-  };
-
   return (
-    <Routers isLoggedIn={isLoggedIn} handleLogin={handleLogin} handleRegister={handleRegister} />
+    <Routers isLoggedIn={isLoggedIn} handleLogin={handleLogin}/>
   );
 }
 
