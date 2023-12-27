@@ -19,6 +19,9 @@ const LoginForm = ({ onLogin }) => {
       if (response.status === 200) {//ログイン成功
         console.log(response.data.message);
         onLogin(email);//ログイン状態にしてuserIdにメールを渡す
+        //localStorageにデータを保存してリロード後も情報保持
+        localStorage.setItem("userId",email);
+        localStorage.setItem("isLoggedIn",true);
         navigate('/');//ログインフォームに移動
       }
     } catch (error) {
@@ -27,7 +30,7 @@ const LoginForm = ({ onLogin }) => {
       } else if(error.response && error.response.status === 404) {
         console.error("ユーザが見つかりません",error.response.data.message);
       } else{
-        console.error('An error occurred:', error);
+        console.error("An error occurred:", error);
       }
     }
   };

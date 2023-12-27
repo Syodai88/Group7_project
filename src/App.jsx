@@ -2,8 +2,12 @@ import React,{useState,useEffect} from 'react';
 import Routers from './Component/Routers';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState(null);
+  //ローカルストレージから保存している値があればそれを取得、ないなら初期値のfalseとnull
+  const storagedIsLoggedIn = localStorage.getItem('isLoggedIn')==='true';
+  const storagedUserId = localStorage.getItem('userId');
+
+  const [isLoggedIn, setIsLoggedIn] = useState(storagedIsLoggedIn);
+  const [userId, setUserId] = useState(storagedUserId);
   console.log(userId);
   const handleLogin = (id) => {
     setIsLoggedIn(true);
