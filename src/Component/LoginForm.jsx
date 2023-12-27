@@ -2,16 +2,39 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Button, Typography } from '@mui/material';
 import Header from './Header';
+import axios from 'axios';
 
 const LoginForm = ({ onLogin }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   let navigate = useNavigate();
 
+  const handleLoginCheck = async () => {
+    try {
+      const response = await axios.post('/auth/login', {
+        email:email, 
+        password:password, 
+      });
+
+      if (response.status === 200) {//ログイン成功
+        console.log(response.data.message);
+        onLogin(email);//ログイン状態にしてuserIdにメールを渡す
+        navigate('/');//ログインフォームに移動
+      }
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        console.error("パスワードが違います:",error.response.data.message);
+      } else if(error.response && error.response.status === 404) {
+        console.error("ユーザが見つかりません",error.response.data.message);
+      } else{
+        console.error('An error occurred:', error);
+      }
+    }
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // ここでバックエンドにログインリクエストを送信
-    onLogin(email, password);
+    handleLoginCheck();
   };
 
   return (
