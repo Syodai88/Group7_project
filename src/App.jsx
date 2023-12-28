@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import Routers from './Component/Routers';
 
 const App = () => {
@@ -8,13 +8,12 @@ const App = () => {
 
   const [isLoggedIn, setIsLoggedIn] = useState(storagedIsLoggedIn);
   const [userId, setUserId] = useState(storagedUserId);
-  console.log(userId);
   const handleLogin = (id) => {
     setIsLoggedIn(true);
     setUserId(id);
   };
   return (
-    <Routers isLoggedIn={isLoggedIn} handleLogin={handleLogin}/>
+      <Routers userId={userId} isLoggedIn={isLoggedIn} handleLogin={handleLogin}/>
   );
 }
 

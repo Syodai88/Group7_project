@@ -3,10 +3,12 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import Main from './Main';
+import Header from './Header';
 
-const Routers = ({ isLoggedIn, handleLogin }) => {
+const Routers = ({ userId, isLoggedIn, handleLogin }) => {
   return (
     <Router>
+      <Header userId={userId}/>
       <Routes>
         <Route path="/" element={isLoggedIn ? <Main /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />

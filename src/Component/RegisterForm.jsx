@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
-import Header from './Header';
 import axios from 'axios';
 
 const RegisterForm = () => {
@@ -56,7 +55,6 @@ const RegisterForm = () => {
 
   return (
     <Box>
-      <Header />
       <Box display="flex" flexDirection="column" alignItems="center" justifyContent="center" height="100vh">
         <Box component="form" onSubmit={handleSubmit} display="flex" flexDirection="column" alignItems="center" width={300}>
           <TextField

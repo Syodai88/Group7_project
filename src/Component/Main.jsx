@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from 'react';
-import Header from './Header';
 import InputRecipeForm from './InputRecipeForm';
 import RecipeCard from './RecipeCard';
 import NewRecipeDetails from './NewRecipeDetails';
@@ -111,7 +110,6 @@ const Main = () => {
 
   return (
     <div className="App">
-      <Header />
       <Grid container spacing={3}>
         <Grid item xs={4} md={4}>
           <InputRecipeForm onSubmit={handleRecipeSubmit} setRecipeState={setSampleRecipesState} setButtonState={setIsInputButtonDisabledState} isInputButtonDisabled={isInputButtonDisabled}/>
