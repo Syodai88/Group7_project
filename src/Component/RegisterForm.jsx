@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Box, TextField, Button, Typography, MenuItem, Select, FormControl, InputLabel, IconButton, InputAdornment } from '@mui/material';
 import axios from 'axios';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const RegisterForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [grade, setGrade] = useState('');
-  const [department, setDepartment] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
+  const [passwordType, setPasswordType] = useState("password");
+  const [grade, setGrade] = useState("");
+  const [department, setDepartment] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   let navigate = useNavigate();
 
   // 学科の選択肢
@@ -25,6 +33,33 @@ const RegisterForm = () => {
   };
 
   const handleRegistration = async () => {
+    //フラグとエラーの初期化
+    let error_flg=0;
+    setEmailError('');
+    setPasswordError('');
+    //メール関係のエラー
+    if(!email){
+      setEmailError("メールアドレスを入力してください");
+      error_flg=1;
+    }else if(!email.endsWith("@mail.kyutech.jp")){
+      setEmailError("九工大メールを登録してください");
+      error_flg=1;
+    }
+    //パスワード関係のエラー
+    if(!password){
+      setPasswordError("パスワードを入力してください");
+      error_flg=1;
+    }else if(password !== confirmPassword){
+      setPasswordError("パスワードが一致していません");
+      error_flg=1;
+    }
+
+    if(error_flg===1){
+      return;
+    }
+    //バックエンドに投げる前にエラーを消す
+    setEmailError('');
+    setPasswordError('');
     try {
       const response = await axios.post('/auth/register', {
         email:email, 
@@ -40,18 +75,40 @@ const RegisterForm = () => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         console.error(error.response.data.message);
+        SetEmailError("このメールアドレスは既に登録されています！");
       } else {
         console.error('An error occurred:', error);
+        setEmailError('An error occurred:', error);
       }
     }
   };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword); //パスワード表示/非表示を切り替え
+    setPasswordType(showPassword ? 'text' : 'password');//trueなら表示
+  };
+  const handlePasswordChange = (e) => {
+    const newValue = e.target.value;
+    const isAlphanumeric = /^[a-zA-Z0-9]*$/;//入力を半角英数字に限定
 
+    if (isAlphanumeric.test(newValue) || newValue === "") {
+      setPassword(newValue);
+    }
+  };
+  const handleConfirmPasswordChange = (e) => {
+    const newValue = e.target.value;
+    const isAlphanumeric = /^[a-zA-Z0-9]*$/;//入力を半角英数字に限定
+
+    if (isAlphanumeric.test(newValue) || newValue === "") {
+      setConfirmPassword(newValue);
+    }
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     // ここでバックエンドに登録リクエストを送信
     handleRegistration();
   };
+
 
   return (
     <Box>
@@ -63,16 +120,53 @@ const RegisterForm = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             margin="normal"
+            error={!!emailError}
+            helperText={emailError}
           />
           <TextField
             label="パスワード"
-            type="password"
+            type={passwordType}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             margin="normal"
+            error={!!passwordError}
+            helperText={passwordError}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+          />
+          <TextField
+            label="パスワードの確認"
+            type={passwordType}
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+            margin="normal"
+            error={!!passwordError}
+            helperText={passwordError}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={togglePasswordVisibility}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <FormControl fullWidth margin="normal">
-            <InputLabel>学年</InputLabel>
+            <InputLabel>学年(任意)</InputLabel>
             <Select
               value={grade}
               label="学年"
