@@ -33,8 +33,12 @@ const Header = ({userId}) => {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
     setLogoutConfirmOpen(false);
-    navigate('/login');
-    //ログインページにリダイレクト
+    window.location.reload();
+    setTimeout(() => {
+      navigate('/login');
+    }, 500);
+    
+    //ログインページにリダイレクト、リロードして情報を消す
   };
 
   //確認モーダルの表示/非表示
@@ -86,7 +90,7 @@ const Header = ({userId}) => {
               boxShadow: 24,
             }}
           >
-            <Typography variant="h6">ユーザ名</Typography>
+            <Typography variant="h6">ユーザ名：{userId}</Typography>
             <Button variant="outlined" color="primary" onClick={openLogoutConfirm}>
               ログアウト
             </Button>
