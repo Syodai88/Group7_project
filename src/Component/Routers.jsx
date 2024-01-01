@@ -4,6 +4,7 @@ import LoginForm from './LoginForm';
 import RegisterForm from './RegisterForm';
 import Main from './Main';
 import Header from './Header';
+import RecipeTable from './RecipeTable';
 
 const Routers = ({ userId, isLoggedIn, handleLogin }) => {
   return (
@@ -13,6 +14,7 @@ const Routers = ({ userId, isLoggedIn, handleLogin }) => {
         <Route path="/" element={isLoggedIn ? <Main /> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/register" element={<RegisterForm/>} />
+        <Route path="/record" element={<RecipeTable/>} />
       </Routes>
     </Router>
   );
