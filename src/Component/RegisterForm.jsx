@@ -75,7 +75,7 @@ const RegisterForm = () => {
     } catch (error) {
       if (error.response && error.response.status === 400) {
         console.error(error.response.data.message);
-        SetEmailError("このメールアドレスは既に登録されています！");
+        setEmailError("このメールアドレスは既に登録されています！");
       } else {
         console.error('An error occurred:', error);
         setEmailError('An error occurred:', error);
