@@ -1,8 +1,8 @@
 import React from 'react';
-import { Modal, Box, Typography } from '@mui/material';
+import { Modal, Box, Typography, Button } from '@mui/material';
 import parse from 'html-react-parser';
 
-const NewRecipeModal = ({ open, recipe, onClose }) => {
+const NewRecipeModal = ({ open, recipe, onClose, onSave }) => {
     const recipeDescriptionWithBreaks = recipe.replace(/\n/g, '<br>');//\nを<br>タグに変換
     return (
         <Modal
@@ -28,6 +28,9 @@ const NewRecipeModal = ({ open, recipe, onClose }) => {
             <Typography id="new-recipe-modal-name" variant="h6" component="h2">
                 {parse(recipeDescriptionWithBreaks)}
             </Typography>
+            <Button onClick={onSave}>
+                保存する
+            </Button>
             </Box>
         </Modal>
     );
