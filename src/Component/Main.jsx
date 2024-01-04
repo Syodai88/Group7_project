@@ -9,7 +9,7 @@ import axios from 'axios';
 import { Button } from '@mui/base';
 
 
-const Main = () => {
+const Main = ({userId}) => {
   const [recipeData, setRecipeData] = useState(null);
   const [similarityData, setSimilarityData] = useState(null);
   const [selectedRecipeId, setSelectedRecipeId] = useState(null);
@@ -23,6 +23,7 @@ const Main = () => {
   const [newRecipeImage ,setNewRecipeImage] = useState(DefaultRecipeImage);
   const [isInputButtonDisabled,setIsInputButtonDisabled] = useState(false);//ボタンの活性/非活性
   const [showNewRecipeMpdal,setShowNewRecipeModal]=useState(false);//オリジナルレシピのモーダル
+  const [backEndError, setBackEndError] = useState("");//後でバックエンド通信のエラーを全て入れる、エラーがあれば画面中央にエラーモーダル表示
   //InputRecipeFormのonSubmitハンドラ
   const handleRecipeSubmit = (data) => {
     setRecipeData(data.recipeData);
@@ -108,6 +109,23 @@ const Main = () => {
     fetchData();
   }, [imagePrompt]);
 
+  const handleSave = async () =>{
+    if(recipe){
+      try{
+        const postData ={
+          userId:userId,
+          image:newRecipeImage,//デコード済みなのでレコード必須
+          newRecipe:newRecipe,//レシピ名のみを抜き取る必要あり
+          inputRecipe:recipeData.name,
+          confusionRecipeId:selectedRecipeId//Idを使ってアクセスしてnameを引っ張る
+        };
+        await axios.post('/db/save_newrecipe',postData);//レシピデータを保存、エンコードや日付の追加はpython
+      }catch(error){
+        //エラー処理を記述
+      }
+    }
+  };
+
   return (
     <div className="App">
       <Grid container spacing={3}>
@@ -123,7 +141,7 @@ const Main = () => {
           </div>
         </Grid>
         <Grid item xs={4} md={4}>
-          <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} open={showNewRecipeMpdal} onClose={handleCloseNewRecipeModal}/>
+          <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} open={showNewRecipeMpdal} onClose={handleCloseNewRecipeModal} onSave={handleSave}/>
           
           <Button
             variant="contained"
