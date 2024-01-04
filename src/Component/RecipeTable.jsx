@@ -59,6 +59,7 @@ const columns = [
     filterable: false
   }
 ];
+
 const row={
     id: 1, 
     image: 'https://via.placeholder.com/50', 
@@ -73,7 +74,7 @@ const rows = [
   row,row,row,row,row,row,row,row,row,row,row,row,row,row,row,row,row,row,row,row,row
 ];
 
-const SimpleDataGrid = () => {
+const RecipeTable = () => {
     //１テーブルのページサイズの設定にはautoPageSizeをtrueにしてOptionsに配列を与える
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', height: 850, width: '100%' }}>
@@ -90,4 +91,4 @@ const SimpleDataGrid = () => {
     );
   }
   
-  export default SimpleDataGrid;
+  export default RecipeTable;
