@@ -14,7 +14,7 @@ const Routers = ({ userId, isLoggedIn, handleLogin }) => {
         <Route path="/" element={isLoggedIn ? <Main userId={userId}/> : <Navigate replace to="/login" />} />
         <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
         <Route path="/register" element={<RegisterForm/>} />
-        <Route path="/record" element={<RecipeTable/>} />
+        <Route path="/record" element={<RecipeTable userId={userId}/>} />
       </Routes>
     </Router>
   );
