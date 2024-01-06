@@ -67,7 +67,7 @@ const Header = ({userId}) => {
           {userId &&(
             <Box sx={{ position: 'absolute', right: 0 }}>
               <Button color="inherit" onClick={() => navigate('/')}>Home</Button>
-              <Button color="inherit">Record</Button>
+              <Button color="inherit" onClick={() => navigate('/record')}>Record</Button>
               <Button color="inherit" onClick={handleModalOpen}>
                 <AccountCircleIcon />
               </Button>
