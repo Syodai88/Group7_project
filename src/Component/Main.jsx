@@ -110,7 +110,7 @@ const Main = ({userId}) => {
   }, [imagePrompt]);
 
   const handleSave = async () =>{
-    if(recipe){
+    if(newRecipe){
       try{
         const postData ={
           userId:userId,
