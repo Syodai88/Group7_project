@@ -91,7 +91,7 @@ const Header = ({userId}) => {
             }}
           >
             <Typography variant="h6">ユーザ名：{userId}</Typography>
-            <Button variant="outlined" color="primary" onClick={openLogoutConfirm}>
+            <Button variant="contained" color="error" onClick={openLogoutConfirm}>
               ログアウト
             </Button>
           </Box>
@@ -113,12 +113,10 @@ const Header = ({userId}) => {
             }}
           >
             <Typography variant="h6">本当にログアウトしますか？</Typography>
-            <Button variant="contained" color="error" onClick={handleLogout}>
-              はい
-            </Button>
-            <Button variant="outlined" onClick={closeLogoutConfirm}>
-              いいえ
-            </Button>
+            <Box sx={{ display: 'flex', justifyContent: 'space-around', mt: 2 }}>
+              <Button variant="contained" color="error" onClick={handleLogout}>はい</Button>
+              <Button variant="contained" onClick={closeLogoutConfirm}>いいえ</Button>
+            </Box>
           </Box>
         </Modal>
       </HeaderContainer>
