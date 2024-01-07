@@ -142,22 +142,23 @@ const Main = ({userId}) => {
         </Grid>
         <Grid item xs={4} md={4}>
           <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} open={showNewRecipeMpdal} onClose={handleCloseNewRecipeModal} onSave={handleSave}/>
-          
-          <Button
-            variant="contained"
-            style={{
-              fontSize: '18px',
-              padding: '12px 24px',
-              backgroundColor: 'orange',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              width: '100%',
-            }}
-            onClick={handleShowNewRecipeModal}
-          >
-            作り方を見る！
-          </Button>
+          {(newRecipeImage !== DefaultRecipeImage) && (newRecipeImage !== LoadingImage) &&
+            <Button
+              variant="contained"
+              style={{
+                fontSize: '18px',
+                padding: '12px 24px',
+                backgroundColor: 'orange',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                width: '100%',
+              }}
+              onClick={handleShowNewRecipeModal}
+            >
+              作り方を見る！
+            </Button>
+          }
         </Grid>
       </Grid>
     </div>
