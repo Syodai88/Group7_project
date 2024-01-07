@@ -25,12 +25,14 @@ const NewRecipeModal = ({ open, recipe, onClose, onSave }) => {
             maxHeight: '80%',
             overflow: 'auto'
             }}>
-            <Typography id="new-recipe-modal-name" variant="h6" component="h2">
-                {parse(recipeDescriptionWithBreaks)}
-            </Typography>
-            <Button onClick={onSave}>
-                保存する
-            </Button>
+                <Typography id="new-recipe-modal-name" variant="h6" component="h2">
+                    {parse(recipeDescriptionWithBreaks)}
+                </Typography>
+                <Box sx={{ textAlign: 'center', mt: 2 }}>
+                    <Button variant="contained" color="success" onClick={onSave}>
+                        保存する
+                    </Button>
+                </Box>
             </Box>
         </Modal>
     );
