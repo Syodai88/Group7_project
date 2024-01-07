@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import ContentModal from './ContentModal';
+import DeleteConfirmationModal from './DeleteConfirmationModal';
 const RecipeTable = ({userId}) => {
     const columns = [
       { 
@@ -25,7 +27,9 @@ const RecipeTable = ({userId}) => {
         field: 'content', 
         headerName: '作り方', 
         flex: 1,
-        renderCell: () => (<Button variant="text">作り方</Button>),
+        renderCell: (params) => (
+          <Button variant="text" onClick={() => handleShowContent(params.value)}>作り方</Button>
+        ),
         sortable: false,
         filterable: false
       },
@@ -56,7 +60,7 @@ const RecipeTable = ({userId}) => {
         headerName: '削除', 
         flex: 1, 
         renderCell: (params) => (
-          <Button onClick={() => handleDelete(params.row.id)}>
+          <Button onClick={() => handleDeleteClick(params.row.id)}>
               <DeleteIcon style={{ color: 'red' }} />
           </Button>
         ),
@@ -64,7 +68,36 @@ const RecipeTable = ({userId}) => {
         filterable: false
       }
     ];
+
     const [rows,setRows]=useState([]);//テーブルのデータを格納
+    const [showContentModal, setShowContentModal]=useState(false);
+    const [recipeContent, setRecipeContent]=useState("");
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [deleteRecipeId, setDeleteRecipeId] = useState(null);
+
+    const handleShowContent = (content) => {
+      setRecipeContent(content);
+      setShowContentModal(true);
+    };
+    
+    const handleCloseContentModal = () => {
+        setShowContentModal(false);
+    };
+    
+    const handleDeleteClick = (id) => {
+      setDeleteRecipeId(id);
+      setShowDeleteConfirmation(true);
+    };
+    
+    const handleConfirmDelete = async () => {
+        await handleDelete(deleteRecipeId);
+        setShowDeleteConfirmation(false);
+    };
+    
+    const handleCloseDeleteConfirmation = () => {
+        setShowDeleteConfirmation(false);
+    };
+  
     const handleDelete = async (id) => {
       try {
           console.log(id);
@@ -97,6 +130,7 @@ const RecipeTable = ({userId}) => {
             }
         }
     };
+    //ページ表示時にレシピ取得
     useEffect(() => {
       if (userId) {
           fetchRecipes();
@@ -104,16 +138,22 @@ const RecipeTable = ({userId}) => {
     }, [userId]);
     //１テーブルのページサイズの設定にはautoPageSizeをtrueにしてOptionsに配列を与える
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', height: 850, width: '100%' }}>
-        <DataGrid
-            rowHeight={120}
-            autoPageSize={true}
-            rows={rows}
-            columns={columns}
-            disableColumnMenu
-            disableRowSelectionOnClick={true}
-            disableVirtualization
-        />
+      <Box sx={{ display: 'flex', justifyContent: 'center', height: 850, width: '100%' }}>
+      <DataGrid
+          rowHeight={120}
+          autoPageSize={true}
+          rows={rows}
+          columns={columns}
+          disableColumnMenu
+          disableRowSelectionOnClick={true}
+          disableVirtualization
+      />
+      {showContentModal && (
+        <ContentModal open={showContentModal} content={recipeContent} onClose={handleCloseContentModal} />
+      )}
+      {showDeleteConfirmation && (
+        <DeleteConfirmationModal open={showDeleteConfirmation} onConfirm={handleConfirmDelete} onClose={handleCloseDeleteConfirmation} />
+      )}
       </Box>
     );
   }
