@@ -46,9 +46,11 @@ const RecipeModal = ({ open, handleClose, recipe, onRecipeSelect }) => {
             <Typography key={index}>{index + 1}. {step}</Typography>
           ))}
         </Typography>
-        <Button variant="outlined" onClick={handleSelectRecipe}>
-          この料理を選択！
-        </Button>
+        <Box sx={{ textAlign: 'center', mt: 2 }}>
+          <Button variant="contained" color="info" onClick={handleSelectRecipe}>
+            この料理を選択！
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );
