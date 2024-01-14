@@ -87,6 +87,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
     if (validateForm()) {
       try {
         setButtonState();
+        console.log(recipe);
         setRecipeState([{name:"混ぜる料理の候補を探しています..."},{name:"しばらくお待ちください"}])
         const response = await axios.post('/make_vector',recipe);
         //計算結果の表示
@@ -156,7 +157,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         fullWidth
         label="調理方法"
         name="steps"
-        multiline
+        multiline//改行コードを自動反映
         rows={8}
         onChange={handleChange}
       />
