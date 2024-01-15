@@ -121,8 +121,10 @@ const Main = ({userId}) => {
           inputRecipe:recipeData.name,
           confusionRecipeId:selectedRecipeId//Idを使ってアクセスしてnameを引っ張る
         };
+        console.log(postData);
         await axios.post('/db/save_newrecipe',postData);//レシピデータを保存、エンコードや日付の追加はpython
       }catch(error){
+        alert("レシピの保存に失敗しました。");
         //エラー処理を記述
       }
     }
