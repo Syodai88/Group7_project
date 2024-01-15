@@ -4,7 +4,8 @@ import RecipeCard from './RecipeCard';
 import NewRecipeDetails from './NewRecipeDetails';
 import Grid from '@mui/material/Grid';
 import DefaultRecipeImage from './../stable-diffusion-v1-5.jpeg'
-import LoadingImage from './../picture/chef.gif';//gptでレシピ生成中に表示する画像
+import shoppingImage from './../picture/shopping.gif';//gptでレシピ生成中に表示する羊のGIF画像
+import makingImage from './../picture/chef.gif';//StableDiffusionで画像生成中に表示するパンダのGIF画像
 import axios from 'axios';
 import { Button } from '@mui/base';
 
@@ -77,7 +78,7 @@ const Main = ({userId}) => {
     const fetchData = async () =>{
       if (selectedRecipeId ){//データチェック
         try {
-          setNewRecipeImage(LoadingImage);
+          setNewRecipeImage(shoppingImage);
           const postData={id:selectedRecipeId,recipe:recipeData};//データをオブジェクトにする
           const response = await axios.post('/fetch_newrecipe', postData);//バックエンド処理
           setNewRecipe(response.data["newRecipe"]);
@@ -97,6 +98,7 @@ const Main = ({userId}) => {
     const fetchData = async () =>{
       if(imagePrompt){
         try{
+          setNewRecipeImage(makingImage);
           const postData = {prompt:imagePrompt};
           const response = await axios.post('/fetch_newimage',postData);
           const base64Image = response.data["image"];
