@@ -65,7 +65,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
       const updateIngredients = [...recipe.ingredients];//今の配列を渡す
       if (ingredient.trim() && quantity.trim()) {
         updateIngredients[selectedIngredientIndex] = `${ingredient}:${quantity}`;//indexの場所を更新
-        setRecipe({...recipe, ingredients : updateIngredients});//配列を完全新しくする
+        setRecipe({...recipe, ingredients : updateIngredients});//配列を新しくする
         setIngredient('');
         setQuantity('');
         setSelectedIngredientIndex(-1);
@@ -104,6 +104,36 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
     }
   };
 
+  const handleUrlSubmit = async(e) =>{
+    e.preventDefault();
+    if(url.trim()){
+      try {
+        const response =await axios.post('/scrape/auto_input',{url:url});
+        setRecipe({
+          name: response.data.name,
+          ingredients: response.data.ingredients,
+          steps: response.data.steps
+        });
+      }catch(error){
+        if (error.response) {
+          //バックエンドからのレスポンスエラー
+          console.error('Error:', error.response.data.error);
+          alert('エラー: ' + error.response.data.error);
+        } else if (error.request) {
+          //レスポンスが受け取れなかった場合
+          console.error('Error:', error.request);
+          alert('レスポンスが受け取れませんでした。');
+        } else {
+          //その他のエラー
+          console.error('Error:', error.message);
+          alert('エラーが発生しました: ' + error.message);
+        }
+      }
+    }else{
+      alert('URLを入力してください。');
+    }
+  }
+
   return (
     //html要素のform指定
     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -116,6 +146,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         fullWidth
         label="レシピ名"
         name="name"
+        value={recipe.name}
         onChange={handleChange}
       />
       {/*Gridで具材と材料の入力欄を横並びに*/}
@@ -165,6 +196,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         name="steps"
         multiline//改行コードを自動反映
         rows={8}
+        value={recipe.steps}
         onChange={handleChange}
       />
       <Button disabled={isInputButtonDisabled} type="submit" fullWidth variant="contained" sx={{backgroundColor:'orange'}}>
@@ -181,8 +213,8 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         name="url"
         onChange={handleUrlChange}
       />
-      <Button disabled={isInputButtonDisabled} type="submit" fullWidth variant="contained" sx={{backgroundColor:'orange'}}>
-        送信
+      <Button type="button" fullWidth variant="contained" sx={{backgroundColor:'orange'}} onClick={handleUrlSubmit}>
+        自動入力
       </Button>
     </Box>
   );
