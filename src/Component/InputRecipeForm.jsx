@@ -43,7 +43,8 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
   //URLのイベントハンドラ
   const handleUrlChange = (e) => {
     setUrl(e.target.value);
-  }
+  };
+  
   //既存の具材の変更処理
   const handleIngredientSelect = (index) =>{
     if(selectedIngredientIndex === index){//もう選択していて同じとこを押した時
