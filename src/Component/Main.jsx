@@ -3,7 +3,7 @@ import InputRecipeForm from './InputRecipeForm';
 import RecipeCard from './RecipeCard';
 import NewRecipeDetails from './NewRecipeDetails';
 import Grid from '@mui/material/Grid';
-import DefaultRecipeImage from './../stable-diffusion-v1-5.jpeg'
+import hungryImage from './../picture/hungry.png';
 import shoppingImage from './../picture/shopping.gif';//gptでレシピ生成中に表示する羊のGIF画像
 import makingImage from './../picture/chef.gif';//StableDiffusionで画像生成中に表示するパンダのGIF画像
 import axios from 'axios';
@@ -21,7 +21,7 @@ const Main = ({userId}) => {
   ]);
   const [newRecipe, setNewRecipe] = useState("");//新しいレシピのテキスト
   const [imagePrompt, setImagePrompt] = useState(null);//新しいレシピを生成するプロンプト
-  const [newRecipeImage ,setNewRecipeImage] = useState(DefaultRecipeImage);
+  const [newRecipeImage ,setNewRecipeImage] = useState(hungryImage);
   const [isInputButtonDisabled,setIsInputButtonDisabled] = useState(false);//ボタンの活性/非活性
   const [showNewRecipeMpdal,setShowNewRecipeModal]=useState(false);//オリジナルレシピのモーダル
   const [backEndError, setBackEndError] = useState("");//後でバックエンド通信のエラーを全て入れる、エラーがあれば画面中央にエラーモーダル表示
@@ -146,7 +146,7 @@ const Main = ({userId}) => {
         </Grid>
         <Grid item xs={4} md={4}>
           <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} open={showNewRecipeMpdal} onClose={handleCloseNewRecipeModal} onSave={handleSave}/>
-          {(newRecipeImage !== DefaultRecipeImage) && (newRecipeImage !== shoppingImage) && (newRecipeImage !== makingImage) &&
+          {(newRecipeImage !== hungryImage) && (newRecipeImage !== shoppingImage) && (newRecipeImage !== makingImage) &&
             <Button
               variant="contained"
               style={{
