@@ -12,6 +12,7 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
   const [quantity, setQuantity] = useState('');
   const [selectedIngredientIndex, setSelectedIngredientIndex] = useState(-1);
   const [errors, setErrors] = useState({});
+  const [url, setUrl] = useState('');
 
   //エラーチェックの関数、真偽値を返す
   const validateForm = () => {
@@ -39,6 +40,10 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
   const handleQuantityChange = (e) => {
     setQuantity(e.target.value);
   };
+  //URLのイベントハンドラ
+  const handleUrlChange = (e) => {
+    setUrl(e.target.value);
+  }
   //既存の具材の変更処理
   const handleIngredientSelect = (index) =>{
     if(selectedIngredientIndex === index){//もう選択していて同じとこを押した時
@@ -160,6 +165,20 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
         multiline//改行コードを自動反映
         rows={8}
         onChange={handleChange}
+      />
+      <Button disabled={isInputButtonDisabled} type="submit" fullWidth variant="contained" sx={{backgroundColor:'orange'}}>
+        送信
+      </Button>
+      <TextField
+        //!!は強制的に真偽値に変換する
+        error={!!errors.name}//エラーに何もなければfalseの否定でtrue
+        helperText={errors.name}
+        margin="normal"
+        required
+        fullWidth
+        label="URL"
+        name="url"
+        onChange={handleUrlChange}
       />
       <Button disabled={isInputButtonDisabled} type="submit" fullWidth variant="contained" sx={{backgroundColor:'orange'}}>
         送信
