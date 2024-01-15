@@ -122,7 +122,7 @@ const Main = ({userId}) => {
           confusionRecipeId:selectedRecipeId//Idを使ってアクセスしてnameを引っ張る
         };
         console.log(postData);
-        await axios.post('/db/save_newrecipe',postData);//レシピデータを保存、エンコードや日付の追加はpython
+        await axios.post('/db/save',postData);//レシピデータを保存、エンコードや日付の追加はpython
       }catch(error){
         alert("レシピの保存に失敗しました。");
         //エラー処理を記述
@@ -146,7 +146,7 @@ const Main = ({userId}) => {
         </Grid>
         <Grid item xs={4} md={4}>
           <NewRecipeDetails recipe={newRecipe} imageUrl={newRecipeImage} open={showNewRecipeMpdal} onClose={handleCloseNewRecipeModal} onSave={handleSave}/>
-          {(newRecipeImage !== DefaultRecipeImage) && (newRecipeImage !== LoadingImage) &&
+          {(newRecipeImage !== DefaultRecipeImage) && (newRecipeImage !== shoppingImage) && (newRecipeImage !== makingImage) &&
             <Button
               variant="contained"
               style={{
