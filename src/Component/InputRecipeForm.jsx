@@ -87,6 +87,17 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
     }
   };
 
+  const deleteIngredient = () => {
+    if (selectedIngredientIndex >= 0) {
+      const updatedIngredients = recipe.ingredients.filter((_, index) => index !== selectedIngredientIndex);
+      setRecipe({...recipe, ingredients: updatedIngredients});
+      setSelectedIngredientIndex(-1);
+      setIngredient('');
+      setQuantity('');
+    }
+  };
+  
+
   //データの送信
   const handleSubmit = async(e) => {
     e.preventDefault();//送信によるページのリロード防止
@@ -172,9 +183,14 @@ const InputRecipeForm = ({ onSubmit, setRecipeState, setButtonState, isInputButt
           />
         </Grid>
       </Grid>
-      <Button onClick={updateIngredient} variant="contained" sx={{backgroundColor:'orange'}} >
+      <Button onClick={updateIngredient} variant="contained" sx={{backgroundColor:'orange', mr: 2}} >
         {selectedIngredientIndex >= 0 ? '食材を更新' : '食材を追加'}
       </Button>
+      {selectedIngredientIndex >= 0 &&
+      <Button onClick={deleteIngredient} variant="contained" sx={{backgroundColor:'red'}} >
+        食材を削除
+      </Button>
+      }
       {errors.ingredients && <Typography color="error">{errors.ingredients}</Typography>}
       <List>
         {recipe.ingredients.map((item, index) => (
