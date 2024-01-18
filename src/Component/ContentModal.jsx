@@ -1,7 +1,9 @@
 import React from 'react';
 import { Modal, Box, Typography, Button } from '@mui/material';
+import parse from 'html-react-parser';
 
 const ContentModal = ({ open, content, onClose }) => {
+  const contentDescriptionWithBreaks = content.replace(/\n/g, '<br>');//\nを<br>タグに変換
   return (
     <Modal
       open={open}
@@ -25,7 +27,7 @@ const ContentModal = ({ open, content, onClose }) => {
           position: 'relative'
         }}>
         <Typography id="content-modal-description" variant="h6">
-          {content}
+          {parse(contentDescriptionWithBreaks)}
         </Typography>
         <Box sx={{ textAlign: 'center', mt: 2 }}>
           <Button variant="contained" color="info" onClick={onClose}>
