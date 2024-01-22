@@ -140,7 +140,7 @@ const Main = ({userId}) => {
           <div>
             {sampleRecipes.map((recipe, index) => (
               //recipeにはid,name,ingredients,stepsがある
-              <RecipeCard key={index} recipe={recipe} onRecipeSelect={handleRecipeSelection} />
+              <RecipeCard key={index} recipe={recipe} index={index} onRecipeSelect={handleRecipeSelection} />
             ))}
           </div>
         </Grid>
