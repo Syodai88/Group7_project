@@ -29,15 +29,12 @@ const Header = ({userId}) => {
     setModalOpen(false);
   };
   const handleLogout = () => {
+    navigate('/login');
     //ローカルストレージからログイン情報を削除
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
     setLogoutConfirmOpen(false);
     window.location.reload();
-    setTimeout(() => {
-      navigate('/login');
-    }, 500);
-    
     //ログインページにリダイレクト、リロードして情報を消す
   };
 
