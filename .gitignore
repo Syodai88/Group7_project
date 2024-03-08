@@ -14,6 +14,7 @@
 
 #Cannot be published
 /app/data
+/app/model
 /app/api/newrecipe_gpt.py
 
 
