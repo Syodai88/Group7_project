@@ -10,6 +10,12 @@
 
 # production
 /build
+/app/build
+
+#Cannot be published
+/app/data
+/app/api/newrecipe_gpt.py
+
 
 # misc
 .DS_Store
