@@ -73,3 +73,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ### Additional Information
 The app folder is a deployment folder.
 Therefore, there are two build folders, but they have the same contents.
+
+The data and tokenizer used could not be push due to the amount of data.
