@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /.pnp
+/.mp4
 .pnp.js
 
 # testing
